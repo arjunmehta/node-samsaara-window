@@ -7,7 +7,8 @@
 
 function windowInfo(options){
 
-  var config,
+  var samsaara,
+      config,
       connectionController, connections,
       communication,
       ipc;
@@ -54,6 +55,7 @@ function windowInfo(options){
 
   return function windowInfo(samsaaraCore){
 
+    samsaara = samsaaraCore;
     config = samsaaraCore.config;
     connectionController = samsaaraCore.connectionController;
     connections = connectionController.connections;
@@ -65,6 +67,8 @@ function windowInfo(options){
     var exported = {
 
       name: "windowInfo",
+
+      clientScript: __dirname + '/client/samsaara-window.js',
 
       connectionInitialization:{
         windowInfo: connectionInitialzation
