@@ -1,0 +1,19 @@
+{
+  "name": "samsaara-window",
+  "version": "0.0.0",
+  "description": "node-samsaara-window ====================",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/arjunmehta/node-samsaara-window.git"
+  },
+  "author": "Arjun Mehta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arjunmehta/node-samsaara-window/issues"
+  },
+  "homepage": "https://github.com/arjunmehta/node-samsaara-window"
+}
