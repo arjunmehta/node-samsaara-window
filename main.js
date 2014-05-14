@@ -4,6 +4,7 @@
  * MIT Licensed
  */
 
+var debug = require('debug')('samsaara:windowInfo');
 
 function windowInfo(options){
 
@@ -27,7 +28,7 @@ function windowInfo(options){
     connection.updateDataAttribute("windowInfo", {});
 
     if(opts.windowInfo !== undefined){
-      console.log("Initializing Window Size...");
+      debug("Initializing Window Size...");
       if(opts.windowInfo === "force") attributes.force("windowInfo");
       communication.sendToClient(connection.id, {internal: "getWindowInfo"}, windowResize);
     }
