@@ -30,7 +30,7 @@ function windowInfo(options){
     if(opts.windowInfo !== undefined){
       debug("Initializing Window Size...");
       if(opts.windowInfo === "force") attributes.force("windowInfo");
-      communication.sendToClient(connection.id, {internal: "getWindowInfo"}, windowResize);
+      connection.execute({internal: "getWindowInfo"}, windowResize);
     }
   }
 
@@ -61,7 +61,7 @@ function windowInfo(options){
     connectionController = samsaaraCore.connectionController;
     connections = connectionController.connections;
     communication = samsaaraCore.communication;
-    ipc = samsaaraCore.ipcRedis;
+    ipc = samsaaraCore.ipc;
 
     samsaaraCore.addClientFileRoute("samsaara-window.js", __dirname + '/client/samsaara-window.js');
 
