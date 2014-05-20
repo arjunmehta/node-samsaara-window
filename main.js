@@ -56,7 +56,7 @@ function windowInfo(options){
 
   return function windowInfo(samsaaraCore){
 
-    samsaara = samsaaraCore;
+    samsaara = samsaaraCore.samsaara;
     config = samsaaraCore.config;
     connectionController = samsaaraCore.connectionController;
     connections = connectionController.connections;
@@ -75,7 +75,7 @@ function windowInfo(options){
         windowInfo: connectionInitialzation
       },
 
-      foundationMethods: {
+      main: {
         windowResize: windowResize
       }
     };
