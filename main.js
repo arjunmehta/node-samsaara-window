@@ -30,7 +30,7 @@ function windowInfo(options){
     if(opts.windowInfo !== undefined){
       debug("Initializing Window Size...");
       if(opts.windowInfo === "force") attributes.force("windowInfo");
-      connection.execute({internal: "getWindowInfo"}, windowResize);
+      connection.executeRaw({ns:"internal", func: "getWindowInfo"}, windowResize);
     }
   }
 
