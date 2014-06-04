@@ -40,7 +40,7 @@ function windowInfo(options){
    */
 
   function windowResize(width, height, windowOffsetX, windowOffsetY){
-    var connection = this.connection;
+    var connection = this;
     connection.updateDataAttribute("windowInfo", {windowWidth: width, windowHeight: height, offsetX: windowOffsetX, offsetY: windowOffsetY});
     samsaara.emit('windowInfo', connection, width, height, windowOffsetX, windowOffsetY);
   }
