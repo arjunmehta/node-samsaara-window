@@ -6,84 +6,77 @@
 
 var debug = require('debug')('samsaara:windowInfo');
 
-function windowInfo(options){
 
-  var samsaara,
-      config,
-      connectionController, connections,
-      communication,
-      ipc;
+var windowInfo = {
 
-  /**
-   * Connection Initialization Methods
-   * Called for every new connection
-   *
-   * @opts: {Object} contains the connection's options
-   * @connection: {SamsaaraConnection} the connection that is initializing
-   * @attributes: {Attributes} The attributes of the SamsaaraConnection and its methods
-   */
+  name: "windowInfo",
 
-  function connectionInitialzation(opts, connection, attributes){
+  clientScript: __dirname + '/client/samsaara-window.js',
 
-    connection.updateDataAttribute("windowInfo", {});
+  connectionInitialization:{
+    windowInfo: connectionInitialzation
+  },
 
-    if(opts.windowInfo !== undefined){
-      debug("Initializing Window Size...");
-      if(opts.windowInfo === "force") attributes.force("windowInfo");
-      connection.executeRaw({ns:"internal", func: "getWindowInfo"}, windowResize);
-    }
+  remoteMethods: {
+    windowResize: windowResize
   }
+};
 
 
-  /**
-   * Foundation Methods
-   */
+var samsaara,
+    config,
+    connectionController, connections,
+    communication,
+    ipc;
 
-  function windowResize(width, height, windowOffsetX, windowOffsetY){
-    var connection = this;
-    connection.updateDataAttribute("windowInfo", {windowWidth: width, windowHeight: height, offsetX: windowOffsetX, offsetY: windowOffsetY});
-    samsaara.emit('windowInfo', connection, width, height, windowOffsetX, windowOffsetY);
-  }
 
- 
+// the root interface loaded by require. Options are pass in options here.
 
-  /**
-   * Module Return Function.
-   * Within this function you should set up and return your samsaara middleWare exported
-   * object. Your eported object can contain:
-   * name, foundation, remoteMethods, connectionInitialization, connectionClose
-   */
-
-  return function windowInfo(samsaaraCore){
-
-    samsaara = samsaaraCore.samsaara;
-    config = samsaaraCore.config;
-    connectionController = samsaaraCore.connectionController;
-    connections = connectionController.connections;
-    communication = samsaaraCore.communication;
-    ipc = samsaaraCore.ipc;
-
-    samsaaraCore.addClientFileRoute("samsaara-window.js", __dirname + '/client/samsaara-window.js');
-
-    var exported = {
-
-      name: "windowInfo",
-
-      clientScript: __dirname + '/client/samsaara-window.js',
-
-      connectionInitialization:{
-        windowInfo: connectionInitialzation
-      },
-
-      main: {
-        windowResize: windowResize
-      }
-    };
-
-    return exported;
-
-  };
-
+function main(opts){
+  return initialize;
 }
 
-module.exports = exports = windowInfo;
+
+// samsaara will call this method when it's ready to load it into its middleware stack
+// return your main 
+
+function initialize(samsaaraCore){
+  samsaara = samsaaraCore.samsaara;
+  config = samsaaraCore.config;
+  connectionController = samsaaraCore.connectionController;
+  connections = connectionController.connections;
+  communication = samsaaraCore.communication;
+  ipc = samsaaraCore.ipc;
+
+  samsaaraCore.addClientFileRoute("samsaara-window.js", __dirname + '/client/samsaara-window.js');
+
+  return windowInfo;
+}
+
+
+
+function connectionInitialzation(opts, connection, attributes){
+
+  connection.updateDataAttribute("windowInfo", {});
+
+  if(opts.windowInfo !== undefined){
+    debug("Initializing Window Size...");
+    if(opts.windowInfo === "force") attributes.force("windowInfo");
+    connection.executeRaw({ns:"internal", func: "getWindowInfo"}, windowResize);
+  }
+}
+
+
+/**
+ * Foundation Methods
+ */
+
+function windowResize(width, height, windowOffsetX, windowOffsetY){
+  var connection = this;
+  connection.updateDataAttribute("windowInfo", {windowWidth: width, windowHeight: height, offsetX: windowOffsetX, offsetY: windowOffsetY});
+  samsaara.emit('windowInfo', connection, width, height, windowOffsetX, windowOffsetY);
+}
+
+
+
+module.exports = exports = main;
